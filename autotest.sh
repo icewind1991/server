@@ -32,7 +32,12 @@ PHP=$(which "$PHP_EXE")
 if [ -z "$PHPUNIT_EXE" ]; then
     PHPUNIT_EXE=phpunit
 fi
-PHPUNIT=$(which "$PHPUNIT_EXE")
+
+if [ -f "./build/integration/vendor/bin/phpunit" ]; then
+    PHPUNIT=$(which "./build/integration/vendor/bin/phpunit")
+else
+    PHPUNIT=$(which "$PHPUNIT_EXE")
+fi
 
 set -e
 
