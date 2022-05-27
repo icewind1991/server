@@ -239,6 +239,14 @@ class Cache implements ICache {
 			$files = $result->fetchAll();
 			$result->closeCursor();
 
+			// oh no, regression
+			$query = $this->getQueryBuilder();
+			$query->selectFileCache()
+				->whereParent($fileId)
+				->orderBy('name', 'ASC');
+
+			$result = $query->execute();
+
 			return array_map(function (array $data) {
 				return self::cacheEntryFromData($data, $this->mimetypeLoader);
 			}, $files);
